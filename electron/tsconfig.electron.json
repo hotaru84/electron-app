@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist-electron",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "electron"]
+  },
+  "include": [
+    "electron/**/*.ts"  // electron フォルダ配下の全ての TypeScript ファイルを対象
+  ],
+  "exclude": [
+    "node_modules",  // node_modules フォルダは除外
+    "dist-electron"   // 出力先フォルダも除外
+  ]
+}
