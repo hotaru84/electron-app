@@ -9,13 +9,14 @@ const __dirname = path.dirname(__filename);
 let mainWindow: BrowserWindow | null = null;
 let apiProcess: ChildProcess | null = null;
 
+console.log(app.getAppPath())
+
 app.whenReady().then(() => {
-  const distPath = path.join(__dirname, '');
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(distPath, 'preload.js')
+      preload: path.join(app.getAppPath(), 'dist-electron', 'preload.js')
     }
   });
 
@@ -23,6 +24,7 @@ app.whenReady().then(() => {
 
   if (process.env.VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadURL('http://localhost:3000');
   }

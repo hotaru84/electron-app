@@ -15,11 +15,11 @@ const Command: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      data: JSON.stringify({ command: "exampleCommand" }),
+      data: JSON.stringify({ a: "a", b: "b" }),
     }).then((res) => {
-      console.log(res);
       if (res.status === 200) {
-        setResponse(res.data.message); // APIからのレスポンスを表示
+        console.log(res.data.a);
+        setResponse(JSON.stringify(res.data));
       } else {
         throw new Error("Failed to fetch");
       }
