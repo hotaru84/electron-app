@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { ChildProcess, fork } from "child_process";
 import { fileURLToPath } from 'url';
+import { parsePcap } from "./parsePcap";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,6 +39,13 @@ app.on("window-all-closed", () => {
 
 app.on("before-quit", () => {
   if (apiProcess) apiProcess.kill();
+});
+
+// IPC通信でファイル解析をメインプロセス側で行う
+ipcMain.handle('parsePcap', async (event, fileBuffer: ArrayBuffer) => {
+  // PCAPファイル解析
+  const result = await parsePcap(fileBuffer);
+  return result;
 });
 
 function startApiServer() {

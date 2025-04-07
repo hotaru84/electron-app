@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('apiConfig', {
 });
 
 contextBridge.exposeInMainWorld('electron', {
-  isElectron: true
+  isElectron: true,
+  parsePcap: (fileBuffer: ArrayBuffer) => ipcRenderer.invoke('parsePcap', fileBuffer),
 });
+
