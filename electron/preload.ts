@@ -3,3 +3,7 @@ const { contextBridge } = require('electron');
 
 contextBridge.exposeInMainWorld('apiConfig', {
 });
+
+contextBridge.exposeInMainWorld('electron', {
+  isElectron: true
+});
