@@ -1,7 +1,8 @@
+import { Response } from "./types/httpjson";
 
 export interface ElectronProps {
   isElectron: boolean,
-  parsePcap?: (fileBuffer: ArrayBuffer) => Promise<{ requests: unknown[]; responses: unknown[] }>;
+  addResponse?: (response: Response[]) => Promise<void>;
 }
 interface ElectronWindow extends Window {
   electron?: ElectronProps;
@@ -10,6 +11,6 @@ export const useElectron = (): ElectronProps => {
 
   return {
     isElectron: !!(window as ElectronWindow).electron,
-    parsePcap: (window as ElectronWindow).electron?.parsePcap
+    addResponse: (window as ElectronWindow).electron?.addResponse
   }
 }
